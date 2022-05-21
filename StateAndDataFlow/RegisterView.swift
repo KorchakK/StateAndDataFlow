@@ -40,6 +40,7 @@ struct RegisterView: View {
         userManger.name = name
         userManger.isRegistered.toggle()
         StorageManager.shared.setRegisteredValue(registered: true)
+        StorageManager.shared.setNameValue(name: userManger.name)
     }
     
     private func checkCorrectName(name: String) {

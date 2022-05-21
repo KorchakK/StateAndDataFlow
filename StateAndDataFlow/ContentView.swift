@@ -10,12 +10,14 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject private var user: UserManager
     @StateObject private var timer = TimeCounter()
+    @State private var nameText = ""
     
     var body: some View {
         VStack {
-            Text("Hi, \(user.name)")
+            Text("Hi, \(nameText)")
                 .font(.largeTitle)
                 .padding(.top, 100)
+                .onAppear(perform: updateName)
             Text("\(timer.counter)")
                 .font(.largeTitle)
                 .padding(.top, 200)
@@ -24,6 +26,13 @@ struct ContentView: View {
             Spacer()
             LogOutButtonView(userManager: user)
         }
+    }
+    
+    private func updateName() {
+        if user.name == "" {
+            user.name = StorageManager.shared.fetchNameValue()
+        }
+        nameText = user.name
     }
 }
 
